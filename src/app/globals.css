@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════
+   DevFeedback Pro — Global Styles
+   Theme: Growth Trust (Dark Slate + Emerald Accent)
+   ═══════════════════════════════════════════════════════ */
+
+@layer base {
+  :root {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --color-emerald-glow: 16, 185, 129;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-300 font-sans selection:bg-emerald-500/30 selection:text-emerald-100;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-950;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-emerald-600;
+  }
+}
+
+@layer components {
+  /* ── Glassmorphism Card ── */
+  .glass-card {
+    @apply relative rounded-2xl border border-white/[0.06] 
+           bg-gradient-to-br from-slate-800/50 to-slate-900/80 
+           backdrop-blur-xl shadow-glass;
+  }
+
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 50%,
+      rgba(16, 185, 129, 0.02) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* ── Premium Button ── */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 
+           px-8 py-4 text-sm font-semibold text-white 
+           bg-button-gradient rounded-xl 
+           shadow-emerald-md transition-all duration-300 
+           hover:shadow-emerald-lg hover:bg-button-gradient-hover 
+           hover:-translate-y-0.5 
+           active:translate-y-0 active:shadow-emerald-sm
+           focus-visible:outline-none focus-visible:ring-2 
+           focus-visible:ring-emerald-400 focus-visible:ring-offset-2 
+           focus-visible:ring-offset-slate-900
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0;
+  }
+
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  }
+
+  .btn-primary:hover::after {
+    @apply opacity-100;
+  }
+
+  /* ── Secondary Button ── */
+  .btn-secondary {
+    @apply relative inline-flex items-center justify-center gap-2 
+           px-6 py-3 text-sm font-medium text-emerald-400 
+           border border-emerald-500/20 rounded-xl 
+           bg-emerald-500/5 backdrop-blur-sm
+           transition-all duration-300 
+           hover:border-emerald-400/40 hover:bg-emerald-500/10 
+           hover:text-emerald-300 hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+
+  /* ── Section Container ── */
+  .section-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ── Gradient Text ── */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r 
+           from-emerald-300 via-emerald-400 to-emerald-500;
+  }
+
+  .gradient-text-white {
+    @apply bg-clip-text text-transparent bg-gradient-to-b 
+           from-white to-slate-400;
+  }
+
+  /* ── Input Styles ── */
+  .form-input {
+    @apply w-full px-4 py-3.5 text-sm text-slate-200 
+           bg-slate-800/60 border border-slate-700/50 rounded-xl
+           backdrop-blur-sm placeholder:text-slate-500
+           transition-all duration-300
+           focus:outline-none focus:border-emerald-500/50 
+           focus:ring-2 focus:ring-emerald-500/10
+           focus:bg-slate-800/80;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-slate-300 mb-2;
+  }
+
+  /* ── Animated Glow Background ── */
+  .glow-bg {
+    @apply relative;
+  }
+
+  .glow-bg::before {
+    content: '';
+    @apply absolute -inset-1 rounded-3xl opacity-0 
+           transition-opacity duration-500 blur-xl;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+  }
+
+  .glow-bg:hover::before {
+    @apply opacity-100;
+  }
+
+  /* ── Noise Texture Overlay ── */
+  .noise-overlay {
+    @apply pointer-events-none fixed inset-0 z-50 opacity-[0.015];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Shimmer Effect ── */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(16, 185, 129, 0.04) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
+  .animate-delay-500 { animation-delay: 500ms; }
+  .animate-delay-700 { animation-delay: 700ms; }
+  .animate-delay-1000 { animation-delay: 1000ms; }
+}
