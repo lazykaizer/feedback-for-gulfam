@@ -3,19 +3,20 @@
    ═══════════════════════════════════════════════════════ */
 
 export const siteConfig = {
-  name: 'DevFeedback Pro',
+  name: 'Feedback Wall',
   description:
-    'Premium feedback collection for freelance developers. Collect structured, consent-based testimonials with zero friction.',
-  url: 'https://devfeedback.pro',
+    'A personal space to collect honest feedback from my clients and collaborators. Your thoughts help me improve my craft.',
+  url: 'https://feedbackwall.pro',
   author: {
     name: 'Gulfam Siddique',
-    title: 'Full-Stack Developer & Freelancer',
-    bio: 'I build high-performance web applications for startups and businesses worldwide. Your feedback helps me grow and deliver better experiences.',
+    title: 'Software Engineer & Digital Creator',
+    bio: 'I build high-performance web applications and digital experiences. Your feedback is the catalyst for my continuous learning.',
     avatarUrl: '/avatar.jpg',
     socials: {
       github: 'https://github.com/lazykaizer',
       linkedin: 'https://www.linkedin.com/in/gulfam-siddique/',
-      twitter: 'https://x.com/gulfam',
+      instagram: 'https://instagram.com/lazy_.kaizer',
+      coffee: 'https://buymeacoffee.com/lazykaizer',
     },
   },
 };
@@ -28,17 +29,21 @@ export interface Project {
   icon: string; // Lucide icon name
   gradient: string;
   url?: string;
+  image?: string; // Unsplash image url
+  logoUrl?: string; // Custom logo image
 }
 
 export const projects: Project[] = [
   {
     id: 'monodesk',
     name: 'Monodesk',
-    description: "The AI-Powered Operating System for Next-Gen Founders & Creators. A complete mission control integrating state-of-the-art AI models (Gemini and Veo) to accelerate every phase of the startup lifecycle.",
+    description: "The AI-Powered Operating System for Next-Gen Founders & Creators. A complete mission control integrating state-of-the-art AI models.",
     tech: ['Next.js 16', 'React 19', 'Tailwind', 'Supabase', 'Gemini Pro'],
     icon: 'Sparkles', // Represents its AI capabilities
     gradient: 'from-emerald-500/20 to-teal-500/20',
     url: 'https://monodesk.tech',
+    image: '/projects/monodesk.png',
+    logoUrl: '/projects/monodesk-logo.png',
   },
   {
     id: 'smart-wardrobe',
@@ -48,14 +53,18 @@ export const projects: Project[] = [
     icon: 'Shirt',
     gradient: 'from-indigo-500/20 to-purple-500/20',
     url: 'https://smart-wardrobe-hazel.vercel.app/',
+    image: '/projects/smart-wardrobe.png',
+    logoUrl: '/projects/smart-wardrobe-logo.png',
   },
   {
-    id: 'devfeedback-pro',
-    name: 'DevFeedback Pro',
+    id: 'feedback-wall',
+    name: 'Feedback Wall',
     description: 'A premium, modern feedback collection and testimonial management portfolio for freelance developers.',
     tech: ['Next.js', 'React', 'Framer Motion', 'Tailwind CSS', 'Supabase'],
     icon: 'MessageCircle',
     gradient: 'from-blue-500/20 to-cyan-500/20',
+    logoUrl: '/logo.png',
+    image: '/projects/feedback-wall.png',
   },
 ];
 

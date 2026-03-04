@@ -24,6 +24,8 @@ const initialFormData: FeedbackFormData = {
 };
 
 export function FeedbackFormSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [formData, setFormData] = useState<FeedbackFormData>(initialFormData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>('idle');
@@ -128,30 +130,83 @@ export function FeedbackFormSection() {
               className="glass-card p-6 sm:p-8 lg:p-10 space-y-7"
             >
               {/* ── Project Selector ── */}
-              <motion.div variants={fadeUp}>
+              <motion.div variants={fadeUp} className="relative z-50">
                 <label className="form-label">
                   Select Project <span className="text-emerald-400">*</span>
                 </label>
                 <div className="relative">
-                  <select
-                    value={formData.projectId}
-                    onChange={(e) => updateField('projectId', e.target.value)}
+                  <div
+                    onClick={() => setIsProjectDropdownOpen(!isProjectDropdownOpen)}
                     className={cn(
-                      'form-input appearance-none pr-10 cursor-pointer',
+                      'form-input pr-10 cursor-pointer flex items-center min-h-[3.25rem]',
                       errors.projectId && 'border-red-500/50 focus:border-red-500/50'
                     )}
                   >
-                    <option value="">Choose a project...</option>
-                    {projects.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
-                  />
+                    {formData.projectId ? (
+                      <div className="flex items-center gap-3 w-full">
+                        {projects.find(p => p.id === formData.projectId)?.logoUrl ? (
+                          <img
+                            src={projects.find(p => p.id === formData.projectId)?.logoUrl}
+                            alt="Logo"
+                            className="w-6 h-6 object-contain"
+                          />
+                        ) : null}
+                        <span className="text-slate-200">
+                          {projects.find((p) => p.id === formData.projectId)?.name}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-slate-500">Choose a project...</span>
+                    )}
+
+                    <ChevronDown
+                      size={16}
+                      className={cn(
+                        "absolute right-4 text-slate-500 transition-transform duration-200",
+                        isProjectDropdownOpen && "rotate-180"
+                      )}
+                    />
+                  </div>
+
+                  <AnimatePresence>
+                    {isProjectDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 5 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute left-0 right-0 top-[calc(100%+0.5rem)] bg-slate-900 border border-slate-700/50 shadow-2xl rounded-xl z-50 overflow-hidden"
+                      >
+                        {projects.map((p) => (
+                          <div
+                            key={p.id}
+                            onClick={() => {
+                              updateField('projectId', p.id);
+                              setIsProjectDropdownOpen(false);
+                            }}
+                            className={cn(
+                              "flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors duration-200 hover:bg-slate-800/50",
+                              formData.projectId === p.id && "bg-emerald-500/10 hover:bg-emerald-500/20"
+                            )}
+                          >
+                            {p.logoUrl ? (
+                              <img src={p.logoUrl} alt="Logo" className="w-6 h-6 object-contain" />
+                            ) : (
+                              <div className={`w-6 h-6 rounded-md bg-gradient-to-br ${p.gradient} flex items-center justify-center`}>
+                                <div className="w-3 h-3 bg-white/20 rounded-sm" />
+                              </div>
+                            )}
+                            <span className={cn(
+                              "text-sm font-medium",
+                              formData.projectId === p.id ? "text-emerald-400" : "text-slate-300"
+                            )}>
+                              {p.name}
+                            </span>
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
                 {errors.projectId && (
                   <p className="text-xs text-red-400 mt-1.5">{errors.projectId}</p>

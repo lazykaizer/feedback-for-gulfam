@@ -3,12 +3,13 @@
 import { motion } from 'framer-motion';
 import { siteConfig } from '@/lib/constants';
 import { fadeUp, viewportConfig } from '@/lib/animations';
-import { Github, Linkedin, Twitter, Heart, ArrowUpRight, Mail } from 'lucide-react';
+import { Github, Linkedin, Instagram, Coffee, Heart, ArrowUpRight, Mail, Send } from 'lucide-react';
 
 const socialIcons: Record<string, React.FC<{ size?: number; className?: string }>> = {
   github: Github,
   linkedin: Linkedin,
-  twitter: Twitter,
+  instagram: Instagram,
+  coffee: Coffee,
 };
 
 export function FooterSection() {
@@ -25,31 +26,37 @@ export function FooterSection() {
           viewport={viewportConfig}
         >
           {/* Main footer grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
             {/* Brand column */}
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-emerald-sm">
-                  <span className="text-white font-bold text-sm">D</span>
+            <div className="md:col-span-2 lg:col-span-4 lg:pr-8">
+              <div className="flex items-center mb-6">
+                <div className="flex items-center justify-center">
+                  <img src="/logo.png" alt="Feedback Wall Logo" className="w-10 h-10 sm:w-12 sm:h-12 object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.3)] transform -rotate-3 hover:rotate-0 transition-transform duration-300" />
                 </div>
-                <span className="font-semibold text-white text-base tracking-tight">
+                <span className="font-bold text-white text-lg sm:text-xl tracking-tight -ml-1 sm:-ml-2">
                   {siteConfig.name}
                 </span>
               </div>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
-                Premium feedback collection for freelance developers. Built with trust, powered by honest feedback.
+              <p className="text-sm text-slate-400 leading-relaxed max-w-sm mb-6">
+                A personal space to collect honest feedback from my clients and collaborators. Your thoughts help me improve my craft.
               </p>
+              <a
+                href={`mailto:siddiquegulfam703@gmail.com`}
+                className="inline-flex items-center gap-1.5 text-sm text-emerald-400/80 hover:text-emerald-400 transition-colors"
+              >
+                <Mail size={14} />
+                Get in touch
+              </a>
             </div>
 
             {/* Quick Links */}
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Quick Links</h4>
-              <ul className="space-y-2.5">
+            <div className="lg:col-span-2">
+              <h4 className="text-sm font-semibold text-white mb-6">Quick Links</h4>
+              <ul className="space-y-3">
                 {[
                   { label: 'Home', href: '#hero' },
                   { label: 'Projects', href: '#projects' },
                   { label: 'Give Feedback', href: '#feedback' },
-                  { label: 'Testimonials', href: '#testimonials' },
                 ].map((link) => (
                   <li key={link.href}>
                     <a
@@ -68,9 +75,9 @@ export function FooterSection() {
             </div>
 
             {/* Connect */}
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Connect</h4>
-              <ul className="space-y-2.5">
+            <div className="lg:col-span-2">
+              <h4 className="text-sm font-semibold text-white mb-6">Connect</h4>
+              <ul className="space-y-3">
                 {Object.entries(siteConfig.author.socials).map(([platform, url]) => {
                   const Icon = socialIcons[platform] || Github;
                   return (
@@ -90,19 +97,28 @@ export function FooterSection() {
               </ul>
             </div>
 
-            {/* About */}
-            <div>
-              <h4 className="text-sm font-semibold text-white mb-4">About</h4>
-              <p className="text-sm text-slate-500 leading-relaxed mb-3">
-                {siteConfig.author.title}
+            {/* Stay Connected */}
+            <div className="md:col-span-2 lg:col-span-4">
+              <h3 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 leading-tight tracking-tight">
+                Stay<br />Connected
+              </h3>
+              <p className="text-sm text-slate-400 mb-6 max-w-sm">
+                Join our newsletter for the latest updates and exclusive offers.
               </p>
-              <a
-                href={`mailto:contact@devfeedback.pro`}
-                className="inline-flex items-center gap-1.5 text-sm text-emerald-400/80 hover:text-emerald-400 transition-colors"
-              >
-                <Mail size={13} />
-                Get in touch
-              </a>
+
+              <div className="relative group max-w-sm">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full bg-transparent border border-slate-700/80 rounded-xl px-4 py-3.5 pr-14 text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50 transition-colors placeholder:text-slate-600"
+                />
+                <button
+                  type="button"
+                  className="absolute right-1.5 top-1.5 bottom-1.5 bg-slate-100 text-slate-900 rounded-lg aspect-square flex items-center justify-center hover:bg-emerald-400 hover:text-white transition-colors"
+                >
+                  <Send size={15} className="-translate-x-[1px] translate-y-[1px]" />
+                </button>
+              </div>
             </div>
           </div>
 
@@ -116,7 +132,7 @@ export function FooterSection() {
             </p>
 
             <p className="text-xs text-slate-600 flex items-center gap-1">
-              Made with <Heart size={11} className="text-emerald-500 fill-emerald-500" /> using Next.js &amp; Supabase
+              Made with <Heart size={11} className="text-emerald-500 fill-emerald-500 mx-1" /> by Gulfam
             </p>
           </div>
         </motion.div>

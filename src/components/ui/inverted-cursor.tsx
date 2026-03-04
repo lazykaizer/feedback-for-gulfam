@@ -8,7 +8,7 @@ interface CursorProps {
 
 export const Cursor: React.FC<CursorProps> = ({ size = 60 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number | undefined>(undefined);
+  const requestRef = useRef<number>();
   const previousPos = useRef({ x: -size, y: -size });
   const targetPos = useRef({ x: -size, y: -size });
 
@@ -36,18 +36,7 @@ export const Cursor: React.FC<CursorProps> = ({ size = 60 }) => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Disable the custom cursor when hovering over the feedback section
-      const isOverForm = target.closest('#feedback');
-
-      if (isOverForm) {
-        setVisible(false);
-        document.body.style.cursor = "auto";
-      } else {
-        setVisible(true);
-        document.body.style.cursor = "none";
-      }
-
+      setVisible(true);
       targetPos.current = { x: e.clientX, y: e.clientY };
     };
 
@@ -57,8 +46,6 @@ export const Cursor: React.FC<CursorProps> = ({ size = 60 }) => {
     document.addEventListener("mousemove", handleMouseMove);
     document.documentElement.addEventListener("mouseenter", handleMouseEnter);
     document.documentElement.addEventListener("mouseleave", handleMouseLeave);
-
-    // Initial global state, handled by mousemove going forward
     document.body.style.cursor = "none";
 
     requestRef.current = requestAnimationFrame(animate);

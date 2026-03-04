@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer, floating, easings } from '@/lib/animations';
 import { siteConfig } from '@/lib/constants';
-import { ArrowDown, Github, Linkedin, Twitter } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Instagram, Coffee } from 'lucide-react';
 
 export function HeroSection() {
   return (
@@ -123,7 +123,8 @@ export function HeroSection() {
           {[
             { icon: Github, href: siteConfig.author.socials.github },
             { icon: Linkedin, href: siteConfig.author.socials.linkedin },
-            { icon: Twitter, href: siteConfig.author.socials.twitter },
+            { icon: Instagram, href: siteConfig.author.socials.instagram },
+            { icon: Coffee, href: siteConfig.author.socials.coffee },
           ].map(({ icon: Icon, href }, i) => (
             <motion.a
               key={i}

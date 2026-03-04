@@ -33,27 +33,14 @@ export function Navbar() {
     >
       <div className="section-container flex items-center justify-between h-16 sm:h-20">
         {/* Logo */}
-        <a href="#hero" className="flex items-center gap-2 group">
-          <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-emerald-sm group-hover:shadow-emerald-md transition-shadow duration-300">
-            <span className="text-white font-bold text-sm">D</span>
+        <a href="#hero" className="flex items-center group">
+          <div className="flex items-center justify-center">
+            <img src="/logo.png" alt="Feedback Wall Logo" className="w-10 h-10 sm:w-14 sm:h-14 object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.3)] transform -rotate-3 group-hover:rotate-0 transition-transform duration-300" />
           </div>
-          <span className="font-semibold text-white text-sm sm:text-base tracking-tight">
+          <span className="font-bold text-white text-xl sm:text-2xl tracking-tight -ml-1 sm:-ml-2">
             {siteConfig.name}
           </span>
         </a>
-
-        {/* Links */}
-        <div className="hidden sm:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="relative px-4 py-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-white/[0.04]"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
 
         {/* CTA */}
         <a
@@ -62,6 +49,7 @@ export function Navbar() {
         >
           Give Feedback
         </a>
+
       </div>
     </motion.nav>
   );

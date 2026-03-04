@@ -5,6 +5,7 @@ import { SectionWrapper, SectionHeading } from '@/components/ui/SectionWrapper';
 import { staggerContainer, fadeUp, cardHover, viewportConfig } from '@/lib/animations';
 import { whyFeedbackReasons } from '@/lib/constants';
 import { TrendingUp, Shield, Globe, Zap } from 'lucide-react';
+import { FloatingIconsBackground, demoIcons } from '@/components/ui/floating-icons-hero-section';
 
 const iconMap: Record<string, React.FC<{ size?: number; className?: string }>> = {
   TrendingUp,
@@ -19,25 +20,11 @@ export function WhyFeedbackSection() {
       {/* Top Divider */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 max-w-md h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
 
-      {/* Background: gradient + animated orbs */}
+      {/* Background: gradient */}
       <div className="absolute inset-0 bg-hero-gradient pointer-events-none" />
 
-      {/* Animated gradient orbs */}
-      <motion.div
-        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/[0.07] rounded-full blur-[100px] pointer-events-none"
-      />
-      <motion.div
-        animate={{ x: [0, -20, 0], y: [0, 30, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-emerald-600/[0.05] rounded-full blur-[100px] pointer-events-none"
-      />
-      <motion.div
-        animate={{ x: [0, 15, 0], y: [0, 15, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-800/30 rounded-full blur-[120px] pointer-events-none"
-      />
+      {/* Floating Icons Background */}
+      <FloatingIconsBackground icons={demoIcons} />
 
       {/* Grid pattern */}
       <div

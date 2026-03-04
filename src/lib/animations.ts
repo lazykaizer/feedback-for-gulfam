@@ -121,6 +121,5 @@ export const pulseGlow: Variants = {
 /** Viewport detection settings for scroll-triggered animations */
 export const viewportConfig = {
   once: true,
-  margin: '-80px',
-  amount: 0.3 as const,
+  margin: '-20px',
 };
