@@ -23,7 +23,14 @@ const initialFormData: FeedbackFormData = {
   consentPublic: false,
 };
 
+import { useMutation } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
+import { Id } from '../../../convex/_generated/dataModel';
+
 export function FeedbackFormSection() {
+  const generateUploadUrl = useMutation(api.reviews.generateUploadUrl);
+  const createReview = useMutation(api.reviews.createReview);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
   const [formData, setFormData] = useState<FeedbackFormData>(initialFormData);
@@ -62,30 +69,34 @@ export function FeedbackFormSection() {
     setStatus('submitting');
 
     try {
-      // Prepare multipart form data for image upload
-      const payload = new FormData();
-      payload.append('projectId', formData.projectId);
-      payload.append('rating', String(formData.rating));
-      payload.append('reviewText', formData.reviewText);
-      payload.append('name', formData.name);
-      payload.append('country', formData.country);
-      payload.append('consentPublic', String(formData.consentPublic));
+      let storageId: Id<"_storage"> | undefined;
+
+      // 1. Handle Image Upload if exists
       if (formData.imageFile) {
-        payload.append('image', formData.imageFile);
+        const postUrl = await generateUploadUrl();
+        const result = await fetch(postUrl, {
+          method: "POST",
+          headers: { "Content-Type": formData.imageFile.type },
+          body: formData.imageFile,
+        });
+        const { storageId: sId } = await result.json();
+        storageId = sId;
       }
 
-      const res = await fetch('/api/reviews', {
-        method: 'POST',
-        body: payload,
+      // 2. Create Review in Convex
+      await createReview({
+        project_id: formData.projectId,
+        rating: formData.rating,
+        review_text: formData.reviewText,
+        name: formData.name || undefined,
+        country: formData.country,
+        consent_public: formData.consentPublic,
+        storage_id: storageId,
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Submission failed');
-      }
 
       setStatus('success');
     } catch (err: any) {
+      console.error('Submission error:', err);
       setStatus('error');
       toast.error(err.message || 'Something went wrong. Please try again.');
       // Allow resubmission

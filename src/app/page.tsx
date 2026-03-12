@@ -9,7 +9,6 @@ import { ProjectsSection } from '@/components/sections/ProjectsSection';
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { FeedbackFormSection } from '@/components/sections/FeedbackFormSection';
 import { FooterSection } from '@/components/layout/Footer';
-import { FloatingCTA } from '@/components/ui/FloatingCTA';
 import { Toaster } from 'react-hot-toast';
 import { siteConfig } from '@/lib/constants';
 
@@ -28,9 +27,9 @@ export default function Home() {
           duration: 4000,
         }}
       />
-      
+
       <Navbar />
-      
+
       <main className="relative">
         <GlassRefractionHero
           title="Your Feedback Shapes My Craft"
@@ -49,9 +48,8 @@ export default function Home() {
         <FeedbackFormSection />
         <TestimonialsSection />
       </main>
-      
+
       <FooterSection />
-      <FloatingCTA />
     </MouseTracker>
   );
 }

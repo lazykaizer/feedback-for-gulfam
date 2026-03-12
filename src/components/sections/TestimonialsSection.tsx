@@ -4,7 +4,18 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionWrapper, SectionHeading } from '@/components/ui/SectionWrapper';
 import { projects } from '@/lib/constants';
-import type { Review } from '@/types/database';
+export interface Review {
+  _id: string;
+  _creationTime: number;
+  project_id: string;
+  rating: number;
+  review_text: string;
+  name?: string;
+  image_url?: string;
+  storage_id?: string;
+  country: string;
+  consent_public: boolean;
+}
 import { TestimonialsColumn, type Testimonial } from '@/components/ui/testimonial-v2';
 
 function getProjectName(projectId: string): string {
@@ -12,31 +23,17 @@ function getProjectName(projectId: string): string {
   return project?.name || projectId;
 }
 
+import { useQuery } from 'convex/react';
+import { api } from '../../../convex/_generated/api';
+
 export function TestimonialsSection() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
+  const reviews = useQuery(api.reviews.getReviews, { limit: 9 });
+  const loading = reviews === undefined;
 
-  useEffect(() => {
-    async function fetchReviews() {
-      try {
-        const res = await fetch('/api/reviews?limit=9'); // fetch 9 to have 3 columns of 3
-        if (res.ok) {
-          const data = await res.json();
-          setReviews(data.reviews || []);
-        }
-      } catch (err) {
-        console.error('Failed to fetch reviews:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchReviews();
-  }, []);
+  // Don't render section if loading or no reviews
+  if (loading || !reviews || reviews.length === 0) return null;
 
-  // Don't render section if no reviews
-  if (!loading && reviews.length === 0) return null;
-
-  const mappedReviews: Testimonial[] = reviews.map((review) => ({
+  const mappedReviews: Testimonial[] = reviews.map((review: Review) => ({
     text: review.review_text,
     image: review.image_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(review.name || 'Anonymous')}&background=random`,
     name: review.name || 'Anonymous',
@@ -103,13 +100,13 @@ export function TestimonialsSection() {
           </div>
           <div className="text-center">
             <p className="text-2xl font-bold gradient-text">
-              {(reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)}
+              {(reviews.reduce((sum: number, r: Review) => sum + r.rating, 0) / reviews.length).toFixed(1)}
             </p>
             <p className="text-xs text-slate-500 mt-1">Avg Rating</p>
           </div>
           <div className="text-center">
             <p className="text-2xl font-bold gradient-text">
-              {new Set(reviews.map((r) => r.country)).size}
+              {new Set(reviews.map((r: Review) => r.country)).size}
             </p>
             <p className="text-xs text-slate-500 mt-1">Countries</p>
           </div>

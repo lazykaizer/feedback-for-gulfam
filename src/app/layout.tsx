@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ConvexClientProvider } from '@/components/providers/ConvexClientProvider';
+
 export default function RootLayout({
   children,
 }: {
@@ -29,19 +31,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark overflow-x-hidden">
       <body className="min-h-screen bg-slate-950 antialiased overflow-x-hidden w-full max-w-[100vw]">
-        {/* Noise texture overlay for premium feel */}
-        <div className="noise-overlay" aria-hidden="true" />
+        <ConvexClientProvider>
+          {/* Noise texture overlay for premium feel */}
+          <div className="noise-overlay" aria-hidden="true" />
 
-        {/* Mouse-follow radial glow */}
-        <div
-          className="pointer-events-none fixed inset-0 z-30 bg-emerald-glow transition-opacity duration-500"
-          aria-hidden="true"
-        />
+          {/* Mouse-follow radial glow */}
+          <div
+            className="pointer-events-none fixed inset-0 z-30 bg-emerald-glow transition-opacity duration-500"
+            aria-hidden="true"
+          />
 
-        {children}
+          {children}
 
-        {/* Floating draggable coffee button */}
-        <FloatingCoffeeButton />
+          {/* Floating draggable coffee button */}
+          <FloatingCoffeeButton />
+        </ConvexClientProvider>
       </body>
     </html>
   );
